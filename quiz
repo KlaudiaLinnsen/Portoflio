@@ -1,0 +1,68 @@
+import random
+scores = {}
+def random_number(max, min):
+    return int(random.random() * ( max - min + 1 ) + min)
+
+def ask_again():
+
+     name=input("What is your name?  \n")
+     print("\nNice to meet you "+name , "\n\t Let's begin the quiz!\n")
+
+     score=0
+
+     quiz_question = {
+                      "What colour is the flag of Poland? \n a.Yellow, Black and Red \n b.White and Red \n c.White and Blue": ['b', 'White and Red', 'white and red'],
+                      "Is Poland on the Baltic Sea?\n a.Yes \n b.No": ['a', 'Yes', 'yes' 'y'],
+                      "Is Poland an EU country?\n a.Yes \n b.No": ['a', 'Yes', 'yes' 'y'],
+                      "What currency is used in Poland?\n a.Euro \n b.Dollar \n c.Zloty": ['Zloty', 'c', 'zloty'],
+                      "When is the Polish independence day?\n a.1st of May \n b.11th of November \n c.11th of October": ['11th of November', 'b'],
+                      "What is the capital of Poland?\n a.Kraków \n b.Warszawa \n c.Szczecin": ['Warszawa', 'b', 'warszawa'],
+                      "Which city is the most beautiful in Poland?\n a.Gdansk \n b.Wroclaw \n c.Poznan": ['a', 'b', 'c'],
+                      "Who was the first king of Poland? \n a.Mieszko I \n b.Boleslaw Chrobry \n c.Mieszko II": ['Boleslaw Chrobry', 'b', 'boleslaw chrobry'],
+                      "What is the national dish of Poland? \n a.Bigos \n b.Baklava \n c.Knedliky": ['a', 'Bigos', 'bigos'],
+                      "What does Poland speak? \n a.Polish \n b.English \n c.Polish and English": ['a', 'Polish', 'polish'],
+                      }
+     # Declaration of Quiz of random size
+     new_quiz = dict()
+     # List of items of original quiz. List in order to interate it
+     items = list(quiz_question.items())
+     # Putting random range of values to the new quiz
+     for i in range(0, random_number(10, 0)):
+         key = items[i][0]
+         value = items[i][1]
+         new_quiz.update({key: value})
+     # for key, value in sorted(d.items(), key=lambda x: random.random()):
+     # https://stackoverflow.com/questions/7785672/how-to-iterate-through-dict-in-random-order-in-python
+     for question, correct_answer in sorted(new_quiz.items(), key=lambda x: random.random()):
+         print(question)
+         answer = input (' ')
+
+         if answer in correct_answer:
+             score = score + 1
+             print("Good answer!\n Score: ", score, "\n")
+         else:
+             print("Sorry, not this time \n Score: ", score, "\n", "The correct answers are: ",correct_answer, "\n")
+     scores[name]= score
+     print(scores)
+
+     percentage = (score/len(quiz_question)) * 100
+     print("You have got " + str(percentage) + "% of good answers!")
+     print("Your total score is:" + str(score) + "/" + str(len(quiz_question)))
+
+     restart=input("\n Do anyone else would like to play ?").lower()
+     if restart == "yes":
+          ask_again()
+     else:
+         total = 0
+         maximum = 0
+         max_name = ""
+         for name, score in scores.items():
+            if maximum < score:
+                maximum = score
+                max_name = name
+            total = total + score
+         print("Average score is ", total/len(scores))
+         print("The highest score is ", maximum, " and the winner is ", max_name)
+
+#code starts
+ask_again()
